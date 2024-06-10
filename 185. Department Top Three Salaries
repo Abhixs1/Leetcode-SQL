@@ -1,0 +1,11 @@
+with rank_earners as ( SELECT name, salary, departmentId,
+DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary desc) "rnk"
+FROM Employee)
+SELECT
+    b.name as Department,
+    a.name as Employee,
+    a.salary as Salary
+FROM rank_earners a
+JOIN Department b
+    ON a.departmentId = b.id
+WHERE a.rnk <= 3 

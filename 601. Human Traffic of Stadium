@@ -1,0 +1,6 @@
+with abhi as (
+select id, visit_date, people, (id - row_number() over(order by visit_date)) 
+as c_id from Stadium where people >= 100)
+
+select id, visit_date, people from abhi where c_id in(select c_id from abhi
+group by c_id having count(c_id)>2);

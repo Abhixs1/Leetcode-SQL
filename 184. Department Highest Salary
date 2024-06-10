@@ -1,0 +1,10 @@
+with cte as (
+    select departmentId, max(e.salary) as salary
+    from Employee e 
+    group by departmentId
+)
+
+select d.name as Department, e.name as employee, e.salary as salary
+FROM cte c, Employee e join Department d
+ON e.departmentId = d.id
+where c.departmentId = e.departmentId and c.salary = e.salary

@@ -1,0 +1,6 @@
+SELECT tree.id,
+    (CASE 
+        WHEN tree.id = (SELECT t1.id FROM tree AS t1 WHERE p_id is NULL) THEN 'Root'
+        WHEN tree.id IN (SELECT t2.p_id FROM tree AS t2) THEN 'Inner'
+        ELSE 'Leaf' END) AS Type
+FROM tree;
